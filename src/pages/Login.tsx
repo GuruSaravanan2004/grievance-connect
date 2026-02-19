@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
+import vijayLogo from "@/assets/vijay-logo.webp";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -35,9 +36,7 @@ export default function Login() {
     <div className="min-h-[60vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="h-14 w-14 rounded-full gov-gradient flex items-center justify-center mx-auto mb-4">
-            <Shield className="h-7 w-7 text-primary-foreground" />
-          </div>
+          <img src={vijayLogo} alt="TVK Logo" className="h-14 w-14 rounded-full object-cover mx-auto mb-4" />
           <h1 className="text-xl font-bold">Admin Login</h1>
           <p className="text-sm text-muted-foreground">நிர்வாகி உள்நுழைவு</p>
         </div>

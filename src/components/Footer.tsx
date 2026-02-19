@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+import vijayLogo from "@/assets/vijay-logo.webp";
 
 export default function Footer() {
   return (
@@ -6,9 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex items-start gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full gov-gradient shrink-0 mt-0.5">
-              <Shield className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <img src={vijayLogo} alt="TVK Logo" className="h-8 w-8 rounded-full object-cover shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-sm">Government Grievance Redressal Portal</h3>
               <p className="text-xs text-muted-foreground mt-1">அரசு குறை தீர்வு நுழைவாயில்</p>

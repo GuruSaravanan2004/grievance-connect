@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { Shield, Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
+import vijayLogo from "@/assets/vijay-logo.webp";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -30,9 +31,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full gov-gradient">
-              <Shield className="h-5 w-5 text-primary-foreground" />
-            </div>
+            <img src={vijayLogo} alt="TVK Logo" className="h-10 w-10 rounded-full object-cover" />
             <div>
               <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight">
                 Government Grievance Redressal Portal

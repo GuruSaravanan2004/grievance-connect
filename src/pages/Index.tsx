@@ -28,13 +28,13 @@ export default function Index() {
             A transparent platform for citizens to submit, track, and resolve grievances with government departments efficiently.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button asChild size="lg" className="bg-gov-gold hover:bg-gov-gold-light text-foreground font-semibold">
+            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
               <Link to="/submit">
                 <FileText className="mr-2 h-5 w-5" />
                 Submit Grievance / குறை சமர்ப்பிக்க
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold border-2 border-accent">
               <Link to="/track">
                 <Search className="mr-2 h-5 w-5" />
                 Track Status / நிலையை கண்காணிக்க
@@ -84,7 +84,7 @@ export default function Index() {
               { icon: CheckCircle2, title: "Get Resolution", titleTamil: "தீர்வு பெறுங்கள்", desc: "Receive updates as your grievance moves through the resolution process" },
             ].map((step, i) => (
               <div key={i} className="text-center p-6 rounded-lg border bg-background hover:shadow-md transition-shadow">
-                <div className="h-14 w-14 rounded-full gov-gradient flex items-center justify-center mx-auto mb-4">
+                <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center mx-auto mb-4">
                   <step.icon className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div className="text-xs font-bold text-primary mb-2">STEP {i + 1}</div>
@@ -95,7 +95,7 @@ export default function Index() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button asChild>
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
               <Link to="/submit">
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
