@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FileText, Search, Clock, CheckCircle2, ArrowRight, Users, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGrievances } from "@/context/GrievanceContext";
-import vijayHero from "@/assets/vijay-hero.jpeg";
+import vijayHero from "@/assets/vijay-hero.png";
 
 export default function Index() {
   const { grievances } = useGrievances();
