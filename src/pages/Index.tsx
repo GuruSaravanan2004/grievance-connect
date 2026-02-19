@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FileText, Search, Clock, CheckCircle2, ArrowRight, Users, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGrievances } from "@/context/GrievanceContext";
+import vijayHero from "@/assets/vijay-hero.jpeg";
 
 export default function Index() {
   const { grievances } = useGrievances();
@@ -16,30 +17,48 @@ export default function Index() {
   return (
     <div>
       {/* Hero */}
-      <section className="gov-gradient py-16 sm:py-24 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4 animate-fade-in">
-            Government Grievance Redressal Portal
-          </h1>
-          <p className="text-primary-foreground/80 text-base sm:text-lg mb-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            அரசு குறை தீர்வு நுழைவாயில்
-          </p>
-          <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            A transparent platform for citizens to submit, track, and resolve grievances with government departments efficiently.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-              <Link to="/submit">
-                <FileText className="mr-2 h-5 w-5" />
-                Submit Grievance / குறை சமர்ப்பிக்க
-              </Link>
-            </Button>
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold border-2 border-accent">
-              <Link to="/track">
-                <Search className="mr-2 h-5 w-5" />
-                Track Status / நிலையை கண்காணிக்க
-              </Link>
-            </Button>
+      <section className="gov-gradient py-16 sm:py-24 px-4 relative overflow-hidden">
+        <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row items-center">
+          {/* Left content */}
+          <div className="flex-1 text-center lg:text-left z-10 relative">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4 animate-fade-in">
+              Government Grievance Redressal Portal
+            </h1>
+            <p className="text-primary-foreground/80 text-base sm:text-lg mb-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              அரசு குறை தீர்வு நுழைவாயில்
+            </p>
+            <p className="text-primary-foreground/70 max-w-2xl mb-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              A transparent platform for citizens to submit, track, and resolve grievances with government departments efficiently.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
+                <Link to="/submit">
+                  <FileText className="mr-2 h-5 w-5" />
+                  Submit Grievance / குறை சமர்ப்பிக்க
+                </Link>
+              </Button>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold border-2 border-accent">
+                <Link to="/track">
+                  <Search className="mr-2 h-5 w-5" />
+                  Track Status / நிலையை கண்காணிக்க
+                </Link>
+              </Button>
+            </div>
+          </div>
+          {/* Right image overlay */}
+          <div className="hidden lg:block flex-shrink-0 relative z-10">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-transparent to-transparent rounded-full" />
+              <img
+                src={vijayHero}
+                alt="Vijay - TVK Leader"
+                className="h-[400px] w-auto object-contain drop-shadow-2xl"
+                style={{
+                  maskImage: "linear-gradient(to left, black 60%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to left, black 60%, transparent 100%)",
+                }}
+              />
+            </div>
           </div>
         </div>
       </section>
