@@ -111,7 +111,7 @@ export default function SubmitGrievance() {
         taluk: form.taluk,
         subject: form.subject,
         description: form.description,
-        status: "pending",
+        status: "in_progress",
         submittedAt: new Date().toISOString().split("T")[0],
         updatedAt: new Date().toISOString().split("T")[0],
         attachmentName: form.attachment?.name,
