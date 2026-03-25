@@ -174,7 +174,7 @@ export const MOCK_GRIEVANCES: Grievance[] = [
     taluk: "trichy",
     subject: "PHC not functioning properly",
     description: "Primary Health Centre lacks basic medicines and staff.",
-    status: "closed",
+    status: "in_progress",
     submittedAt: "2026-01-28",
     updatedAt: "2026-02-08",
   },
