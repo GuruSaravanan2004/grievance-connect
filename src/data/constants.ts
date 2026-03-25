@@ -135,7 +135,7 @@ export const MOCK_GRIEVANCES: Grievance[] = [
     taluk: "coimbatore_north",
     subject: "Pothole on main road",
     description: "Large pothole causing accidents on the main road near bus stand.",
-    status: "pending",
+    status: "in_progress",
     submittedAt: "2026-02-09",
     updatedAt: "2026-02-09",
   },
