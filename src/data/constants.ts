@@ -148,7 +148,7 @@ export const MOCK_GRIEVANCES: Grievance[] = [
     taluk: "madurai_south",
     subject: "Transfer certificate not issued",
     description: "School has not issued transfer certificate despite multiple requests.",
-    status: "resolved",
+    status: "in_progress",
     submittedAt: "2026-02-05",
     updatedAt: "2026-02-12",
   },
