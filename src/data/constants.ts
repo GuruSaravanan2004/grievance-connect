@@ -161,7 +161,7 @@ export const MOCK_GRIEVANCES: Grievance[] = [
     taluk: "salem",
     subject: "Frequent power cuts",
     description: "Village experiencing power cuts lasting 4+ hours daily.",
-    status: "pending",
+    status: "in_progress",
     submittedAt: "2026-02-11",
     updatedAt: "2026-02-11",
   },
