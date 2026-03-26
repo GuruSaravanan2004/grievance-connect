@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Menu, X, LogOut } from "lucide-react";
-import vijayLogo from "@/assets/vijay-logo.webp";
+import IndianLogo from "@/assets/Indian Logo.jpg";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -31,7 +31,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={vijayLogo} alt="TVK Logo" className="h-10 w-10 rounded-full object-cover" />
+            <img src={IndianLogo} alt="Government Emblem" className="h-10 sm:h-12 w-auto object-contain mix-blend-multiply" />
             <div>
               <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight">
                 Government Grievance Redressal Portal
@@ -46,11 +46,10 @@ export default function Header() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-secondary"
-                }`}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === item.path
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground hover:bg-secondary"
+                  }`}
               >
                 {item.label}
               </Link>
@@ -59,11 +58,10 @@ export default function Header() {
               <>
                 <Link
                   to="/admin"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    location.pathname === "/admin"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-foreground hover:bg-secondary"
-                  }`}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === "/admin"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:bg-secondary"
+                    }`}
                 >
                   Admin Panel
                 </Link>
@@ -74,11 +72,10 @@ export default function Header() {
             ) : (
               <Link
                 to="/login"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === "/login"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-secondary"
-                }`}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === "/login"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground hover:bg-secondary"
+                  }`}
               >
                 Login
               </Link>
@@ -102,11 +99,10 @@ export default function Header() {
                 key={item.path}
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-secondary"
-                }`}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${location.pathname === item.path
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground hover:bg-secondary"
+                  }`}
               >
                 {item.label} <span className="text-xs opacity-70">/ {item.labelTamil}</span>
               </Link>

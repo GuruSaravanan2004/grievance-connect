@@ -1,4 +1,4 @@
-import vijayLogo from "@/assets/vijay-logo.webp";
+import IndianLogo from "@/assets/Indian Logo.jpg";
 
 export default function Footer() {
   return (
@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex items-start gap-3">
-            <img src={vijayLogo} alt="TVK Logo" className="h-8 w-8 rounded-full object-cover shrink-0 mt-0.5" />
+            <img src={IndianLogo} alt="Government Emblem" className="h-8 w-auto object-contain mix-blend-multiply shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-sm">Government Grievance Redressal Portal</h3>
               <p className="text-xs text-muted-foreground mt-1">அரசு குறை தீர்வு நுழைவாயில்</p>

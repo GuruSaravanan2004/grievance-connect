@@ -20,7 +20,7 @@ export default function Index() {
       <section className="gov-gradient py-16 sm:py-24 px-4 relative overflow-hidden">
         <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row items-center">
           {/* Left content */}
-          <div className="flex-1 text-center lg:text-left z-10 relative">
+          <div className="flex-1 text-center lg:text-left z-10 relative lg:pr-8">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4 animate-fade-in">
               Government Grievance Redressal Portal
             </h1>
@@ -45,20 +45,14 @@ export default function Index() {
               </Button>
             </div>
           </div>
-          {/* Right image overlay */}
-          <div className="hidden lg:block flex-shrink-0 relative z-10">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-transparent to-transparent rounded-full" />
-              <img
-                src={vijayHero}
-                alt="Vijay - TVK Leader"
-                className="h-[400px] w-auto object-contain drop-shadow-2xl"
-                style={{
-                  maskImage: "linear-gradient(to left, black 60%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to left, black 60%, transparent 100%)",
-                }}
-              />
-            </div>
+          {/* Right image */}
+          <div className="hidden lg:flex flex-1 justify-center relative z-10">
+            <img
+              src={vijayHero}
+              alt="Government Emblem"
+              className="h-[350px] lg:h-[450px] w-auto object-contain drop-shadow-2xl animate-fade-in mix-blend-multiply"
+              style={{ animationDelay: "0.4s" }}
+            />
           </div>
         </div>
       </section>
