@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import StepIndicator from "@/components/StepIndicator";
 import { useGrievances } from "@/context/GrievanceContext";
+import { useAuth } from "@/context/AuthContext";
 import {
   DEPARTMENTS,
   LOCAL_BODY_TYPES,
@@ -29,7 +30,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { FileText, Upload, ChevronLeft, ChevronRight, Send, Trash2 } from "lucide-react";
+import { FileText, Upload, ChevronLeft, ChevronRight, Send, Trash2, LogIn } from "lucide-react";
 
 const STEPS = ["Department", "Location & Details", "Communication"];
 
@@ -40,6 +41,7 @@ export default function SubmitGrievance() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { addGrievance } = useGrievances();
+  const { auth } = useAuth();
 
   const [form, setForm] = useState({
     department: "",
@@ -318,6 +320,10 @@ export default function SubmitGrievance() {
             {step < 2 ? (
               <Button onClick={next}>
                 Next <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            ) : !auth.isLoggedIn ? (
+              <Button onClick={() => navigate("/login")} variant="default">
+                <LogIn className="h-4 w-4 mr-1" /> Login to Submit / சமர்ப்பிக்க உள்நுழைக
               </Button>
             ) : (
               <Button onClick={handleSubmit} disabled={submitting}>

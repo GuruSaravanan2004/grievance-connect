@@ -15,7 +15,7 @@ export default function Login() {
   const [fullName, setFullName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, login: contextLogin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -33,7 +33,34 @@ export default function Login() {
       setError(error);
     } else {
       toast({ title: "Login Successful / உள்நுழைவு வெற்றிகரமானது" });
-      navigate("/admin");
+      navigate("/");
+    }
+  };
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter both email and password");
+      return;
+    }
+    
+    // Explicit hardcoded check for admin
+    if (email === "pravinsurender01@gmail.com" && password === "guru001") {
+      setIsLoading(true);
+      // Try Supabase auth first, if it works, great. 
+      // We also use the local bypass to ensure they get admin access even if Supabase isn't synced.
+      await signIn(email, password);
+      
+      const success = contextLogin(email, password);
+      setIsLoading(false);
+      
+      if (success) {
+        toast({ title: "Admin Login Successful / நிர்வாகி உள்நுழைவு" });
+        navigate("/admin");
+      }
+    } else {
+      setError("Only authorized admin can access the admin dashboard.");
     }
   };
 
@@ -89,6 +116,17 @@ export default function Login() {
               {error && <p className="text-destructive text-sm">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 <LogIn className="h-4 w-4 mr-2" /> {isLoading ? "Logging in..." : "Login / உள்நுழைக"}
+              </Button>
+              <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-muted" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                </div>
+              </div>
+              <Button type="button" variant="outline" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" onClick={handleAdminLogin} disabled={isLoading}>
+                <LogIn className="h-4 w-4 mr-2" /> Admin Login / நிர்வாகி உள்நுழைக
               </Button>
             </form>
           </TabsContent>
