@@ -52,6 +52,7 @@ export default function AdminDashboard() {
   const [viewGrievance, setViewGrievance] = useState<Grievance | null>(null);
 
   if (!auth.isLoggedIn) return <Navigate to="/login" replace />;
+  if (auth.role !== "admin") return <Navigate to="/" replace />;
 
   const filtered = grievances.filter((g) => {
     const matchSearch = g.id.toLowerCase().includes(search.toLowerCase()) ||
@@ -239,7 +240,20 @@ export default function AdminDashboard() {
               </div>
               <div><span className="text-muted-foreground">Subject:</span><p className="font-medium">{viewGrievance.subject}</p></div>
               <div><span className="text-muted-foreground">Description:</span><p>{viewGrievance.description}</p></div>
-              {viewGrievance.attachmentName && (
+              {viewGrievance.attachmentUrl && (
+                <div>
+                  <span className="text-muted-foreground mr-2">Attachment:</span>
+                  <a href={viewGrievance.attachmentUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+                    {viewGrievance.attachmentName || "View Attachment"}
+                  </a>
+                  {viewGrievance.attachmentUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i) && (
+                    <div className="mt-2 border rounded-md overflow-hidden bg-muted max-w-sm">
+                      <img src={viewGrievance.attachmentUrl} alt="Attachment preview" className="w-full h-auto object-contain" />
+                    </div>
+                  )}
+                </div>
+              )}
+              {!viewGrievance.attachmentUrl && viewGrievance.attachmentName && (
                 <div><span className="text-muted-foreground">Attachment:</span><p>{viewGrievance.attachmentName}</p></div>
               )}
             </div>

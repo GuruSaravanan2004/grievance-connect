@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
 import IndianLogo from "@/assets/Indian Logo.jpg";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useGrievances } from "@/context/GrievanceContext";
 
 const NAV_ITEMS = [
   { label: "Home", labelTamil: "முகப்பு", path: "/" },
@@ -14,6 +16,8 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const { auth, logout } = useAuth();
+  const { grievances } = useGrievances();
+  const userGrievances = grievances.filter((g) => g.authorEmail === auth.username);
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -42,29 +46,60 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === item.path
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground hover:bg-secondary"
-                  }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            {auth.isLoggedIn ? (
-              <>
+            {NAV_ITEMS.map((item) => {
+              if (item.path === "/track" && !auth.isLoggedIn) return null;
+              return (
                 <Link
-                  to="/admin"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === "/admin"
+                  key={item.path}
+                  to={item.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === item.path
                     ? "bg-primary text-primary-foreground"
                     : "text-foreground hover:bg-secondary"
                     }`}
                 >
-                  Admin Panel
+                  {item.label}
                 </Link>
+              );
+            })}
+            {auth.isLoggedIn ? (
+              <>
+                {auth.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === "/admin"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground hover:bg-secondary"
+                      }`}
+                  >
+                    Admin Panel
+                  </Link>
+                )}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" size="sm" className="ml-2">
+                      <User className="h-4 w-4 mr-1" /> Profile
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto min-w-64 max-w-sm p-4 border rounded-md shadow-md bg-card" align="end">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold leading-none text-foreground border-b pb-2 mb-2">My Profile</h4>
+                      {auth.fullName && (
+                        <div className="text-sm">
+                          <span className="text-muted-foreground mr-2">Name:</span>
+                          <span className="font-medium text-foreground">{auth.fullName}</span>
+                        </div>
+                      )}
+                      <div className="text-sm break-all">
+                        <span className="text-muted-foreground mr-2">Email:</span>
+                        <span className="font-medium text-foreground">{auth.username || "Admin"}</span>
+                      </div>
+                      <div className="text-sm border-t pt-2 mt-2">
+                        <span className="text-muted-foreground mr-2">Total Grievances:</span>
+                        <span className="font-medium text-primary">{userGrievances.length} submitted</span>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <Button variant="ghost" size="sm" onClick={logout} className="ml-2">
                   <LogOut className="h-4 w-4 mr-1" /> Logout
                 </Button>
@@ -94,24 +129,35 @@ export default function Header() {
         {/* Mobile nav */}
         {mobileOpen && (
           <nav className="lg:hidden mt-3 pb-2 border-t pt-3 flex flex-col gap-1 animate-fade-in">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileOpen(false)}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${location.pathname === item.path
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground hover:bg-secondary"
-                  }`}
-              >
-                {item.label} <span className="text-xs opacity-70">/ {item.labelTamil}</span>
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.path === "/track" && !auth.isLoggedIn) return null;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileOpen(false)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${location.pathname === item.path
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:bg-secondary"
+                    }`}
+                >
+                  {item.label} <span className="text-xs opacity-70">/ {item.labelTamil}</span>
+                </Link>
+              );
+            })}
             {auth.isLoggedIn ? (
               <>
-                <Link to="/admin" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-secondary">
-                  Admin Panel
-                </Link>
+                {auth.role === "admin" && (
+                  <Link to="/admin" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-secondary">
+                    Admin Panel
+                  </Link>
+                )}
+                <div className="px-3 py-2 border-y my-1">
+                  <div className="text-sm text-muted-foreground">
+                    Signed in as <span className="text-foreground font-medium block truncate mt-0.5">{auth.fullName ? `${auth.fullName} (${auth.username})` : (auth.username || "Admin")}</span>
+                  </div>
+                  <div className="text-sm font-medium text-primary mt-1">Grievances Submitted: {userGrievances.length}</div>
+                </div>
                 <button onClick={() => { logout(); setMobileOpen(false); }} className="px-3 py-2 rounded-md text-sm font-medium text-left text-destructive hover:bg-secondary">
                   Logout
                 </button>

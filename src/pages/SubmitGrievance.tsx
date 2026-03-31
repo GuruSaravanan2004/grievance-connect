@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import StepIndicator from "@/components/StepIndicator";
 import { useGrievances } from "@/context/GrievanceContext";
 import { useAuth } from "@/context/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import {
   DEPARTMENTS,
   LOCAL_BODY_TYPES,
@@ -103,7 +104,38 @@ export default function SubmitGrievance() {
   const confirmSubmit = () => {
     setSubmitting(true);
     setShowConfirm(false);
-    setTimeout(() => {
+    
+    // Perform async submission
+    (async () => {
+      let attachmentUrl = undefined;
+      let attachmentName = form.attachment?.name;
+
+      if (form.attachment) {
+        const fileExt = form.attachment.name.split('.').pop();
+        const fileName = `${form.grievanceId}-${Math.random()}.${fileExt}`;
+        const filePath = `${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from("attachments")
+          .upload(filePath, form.attachment);
+
+        if (uploadError) {
+          toast({
+            title: "Upload Failed",
+            description: "Failed to upload attachment: " + uploadError.message,
+            variant: "destructive",
+          });
+          setSubmitting(false);
+          return;
+        }
+
+        const { data } = supabase.storage
+          .from("attachments")
+          .getPublicUrl(filePath);
+
+        attachmentUrl = data.publicUrl;
+      }
+
       const grievance: Grievance = {
         id: form.grievanceId,
         department: form.department,
@@ -116,16 +148,28 @@ export default function SubmitGrievance() {
         status: "in_progress",
         submittedAt: new Date().toISOString().split("T")[0],
         updatedAt: new Date().toISOString().split("T")[0],
-        attachmentName: form.attachment?.name,
+        attachmentName: attachmentName,
+        attachmentUrl: attachmentUrl,
+        authorEmail: auth.username,
       };
-      addGrievance(grievance);
+      const { error } = await addGrievance(grievance);
       setSubmitting(false);
+
+      if (error) {
+        toast({
+          title: "Submission Failed / சமர்ப்பிப்பு தோல்வி",
+          description: error,
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
         title: "Grievance Submitted Successfully! / குறை வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது!",
         description: `Your Grievance ID: ${form.grievanceId}`,
       });
       navigate("/track");
-    }, 1500);
+    })();
   };
 
   const discard = () => {

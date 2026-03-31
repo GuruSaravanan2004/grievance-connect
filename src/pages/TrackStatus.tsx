@@ -5,13 +5,16 @@ import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
 import { useGrievances } from "@/context/GrievanceContext";
 import { getDepartmentLabel, getStatusBadgeClass, getStatusLabel } from "@/data/constants";
+import { useAuth } from "@/context/AuthContext";
 
 export default function TrackStatus() {
   const [searchId, setSearchId] = useState("");
   const [searched, setSearched] = useState(false);
   const { grievances } = useGrievances();
+  const { auth } = useAuth();
 
-  const result = searched ? grievances.find((g) => g.id.toLowerCase() === searchId.trim().toLowerCase()) : null;
+  const userGrievances = grievances.filter((g) => g.authorEmail === auth.username);
+  const result = searched ? userGrievances.find((g) => g.id.toLowerCase() === searchId.trim().toLowerCase()) : null;
 
   const handleSearch = () => {
     if (searchId.trim()) setSearched(true);
@@ -72,6 +75,21 @@ export default function TrackStatus() {
               <span className="text-sm text-muted-foreground">Description:</span>
               <p className="text-sm mt-1">{result.description}</p>
             </div>
+            {result.attachmentUrl && (
+              <div>
+                <span className="text-sm text-muted-foreground flex items-center gap-1 mt-3">
+                  Attachment: 
+                  <a href={result.attachmentUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+                    {result.attachmentName || "View Attachment"}
+                  </a>
+                </span>
+                {result.attachmentUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i) && (
+                  <div className="mt-2 border rounded-md overflow-hidden bg-muted max-w-sm">
+                    <img src={result.attachmentUrl} alt="Attachment preview" className="w-full h-auto object-contain" />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -85,23 +103,29 @@ export default function TrackStatus() {
 
       {/* Recent grievances */}
       <div className="mt-8">
-        <h2 className="text-lg font-semibold mb-4">Recent Grievances / சமீபத்திய குறைகள்</h2>
+        <h2 className="text-lg font-semibold mb-4">Your Recent Grievances / உங்கள் சமீபத்திய குறைகள்</h2>
         <div className="space-y-2">
-          {grievances.slice(0, 5).map((g) => (
-            <div
-              key={g.id}
-              className="flex items-center justify-between p-3 rounded-lg border bg-card hover:shadow-sm cursor-pointer transition-shadow"
-              onClick={() => { setSearchId(g.id); setSearched(true); }}
-            >
-              <div>
-                <span className="font-mono text-sm font-medium">{g.id}</span>
-                <p className="text-xs text-muted-foreground">{g.subject}</p>
+          {userGrievances.length > 0 ? (
+            userGrievances.slice(0, 5).map((g) => (
+              <div
+                key={g.id}
+                className="flex items-center justify-between p-3 rounded-lg border bg-card hover:shadow-sm cursor-pointer transition-shadow"
+                onClick={() => { setSearchId(g.id); setSearched(true); }}
+              >
+                <div>
+                  <span className="font-mono text-sm font-medium">{g.id}</span>
+                  <p className="text-xs text-muted-foreground">{g.subject}</p>
+                </div>
+                <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(g.status)}`}>
+                  {g.status.replace("_", " ")}
+                </span>
               </div>
-              <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(g.status)}`}>
-                {g.status.replace("_", " ")}
-              </span>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-muted-foreground text-sm text-center py-4 border rounded-lg">
+              You haven't submitted any grievances yet.
+            </p>
+          )}
         </div>
       </div>
     </div>

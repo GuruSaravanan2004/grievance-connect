@@ -10,7 +10,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   // Legacy compat
-  auth: { isLoggedIn: boolean; username: string; role: "admin" | "guest" };
+  auth: { isLoggedIn: boolean; username: string; role: "admin" | "guest"; fullName?: string };
   login: (username: string, password: string) => boolean;
   logout: () => void;
 }
@@ -65,7 +65,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = {
     isLoggedIn: !!user || isAdminBypass,
     username: user?.email ?? (isAdminBypass ? "pravinsurender01@gmail.com" : ""),
-    role: "admin" as const, // all logged-in users treated as admin for now
+    fullName: user?.user_metadata?.full_name ?? (isAdminBypass ? "Pravin Surender" : ""),
+    role: (user?.email === "pravinsurender01@gmail.com" || isAdminBypass) ? ("admin" as const) : ("guest" as const),
   };
 
   const login = (username: string, _password: string) => {

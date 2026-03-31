@@ -110,6 +110,8 @@ export interface Grievance {
   submittedAt: string;
   updatedAt: string;
   attachmentName?: string;
+  attachmentUrl?: string;
+  authorEmail?: string;
 }
 
 export const MOCK_GRIEVANCES: Grievance[] = [
