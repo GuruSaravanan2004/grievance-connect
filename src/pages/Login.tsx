@@ -45,8 +45,11 @@ export default function Login() {
       return;
     }
     
-    // Explicit hardcoded check for admin
-    if (email === "pravinsurender01@gmail.com" && password === "guru001") {
+    const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || "admin@example.com";
+    const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
+
+    // Explicit check for admin using environment variables
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       setIsLoading(true);
       // Try Supabase auth first, if it works, great. 
       // We also use the local bypass to ensure they get admin access even if Supabase isn't synced.

@@ -61,16 +61,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || "admin@example.com";
+  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
+
   // Legacy compatibility
   const auth = {
     isLoggedIn: !!user || isAdminBypass,
-    username: user?.email ?? (isAdminBypass ? "pravinsurender01@gmail.com" : ""),
-    fullName: user?.user_metadata?.full_name ?? (isAdminBypass ? "Pravin Surender" : ""),
-    role: (user?.email === "pravinsurender01@gmail.com" || isAdminBypass) ? ("admin" as const) : ("guest" as const),
+    username: user?.email ?? (isAdminBypass ? ADMIN_EMAIL : ""),
+    fullName: user?.user_metadata?.full_name ?? (isAdminBypass ? "Admin User" : ""),
+    role: (user?.email === ADMIN_EMAIL || isAdminBypass) ? ("admin" as const) : ("guest" as const),
   };
 
   const login = (username: string, _password: string) => {
-    if (username === "pravinsurender01@gmail.com" && _password === "guru001") {
+    if (username === ADMIN_EMAIL && _password === ADMIN_PASSWORD) {
       setIsAdminBypass(true);
       return true;
     }
