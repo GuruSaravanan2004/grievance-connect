@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogIn, UserPlus } from "lucide-react";
-import IndianLogo from "@/assets/Indian Logo.jpg";
+import IndianLogo from "@/assets/parl.jpg";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -95,7 +95,7 @@ export default function Login() {
     <div className="min-h-[60vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <img src={IndianLogo} alt="Government Emblem" className="h-14 w-auto object-contain mix-blend-multiply mx-auto mb-4" />
+          <img src={IndianLogo} alt="Government Emblem" className="h-28 w-28 object-cover rounded-full mx-auto mb-6 shadow-lg border-2 border-border" />
           <h1 className="text-xl font-bold">Welcome / வரவேற்கிறோம்</h1>
           <p className="text-sm text-muted-foreground">Login or create a new account</p>
         </div>

@@ -2,16 +2,22 @@ import { Link } from "react-router-dom";
 import { FileText, Search, Clock, CheckCircle2, ArrowRight, Users, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGrievances } from "@/context/GrievanceContext";
-import vijayHero from "@/assets/vijay-hero.png";
+import { useAuth } from "@/context/AuthContext";
+import vijayHero from "@/assets/parl.jpg";
 
 export default function Index() {
   const { grievances } = useGrievances();
+  const { auth } = useAuth();
+
+  const userGrievances = auth.isLoggedIn 
+    ? (auth.role === "admin" ? grievances : grievances.filter(g => g.authorEmail === auth.username))
+    : [];
 
   const stats = {
-    total: grievances.length,
-    pending: grievances.filter((g) => g.status === "pending").length,
-    inProgress: grievances.filter((g) => g.status === "in_progress").length,
-    resolved: grievances.filter((g) => g.status === "resolved" || g.status === "closed").length,
+    total: userGrievances.length,
+    pending: userGrievances.filter((g) => g.status === "pending").length,
+    inProgress: userGrievances.filter((g) => g.status === "in_progress").length,
+    resolved: userGrievances.filter((g) => g.status === "resolved" || g.status === "closed").length,
   };
 
   return (
@@ -50,7 +56,7 @@ export default function Index() {
             <img
               src={vijayHero}
               alt="Government Emblem"
-              className="h-[350px] lg:h-[450px] w-auto object-contain drop-shadow-2xl animate-fade-in mix-blend-multiply"
+              className="h-[350px] w-[350px] lg:h-[450px] lg:w-[450px] object-cover rounded-full shadow-2xl border-8 border-white/20 animate-fade-in"
               style={{ animationDelay: "0.4s" }}
             />
           </div>

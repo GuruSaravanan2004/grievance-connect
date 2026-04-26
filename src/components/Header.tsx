@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Menu, X, LogOut, User } from "lucide-react";
-import IndianLogo from "@/assets/Indian Logo.jpg";
+import IndianLogo from "@/assets/parl.jpg";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -35,7 +35,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={IndianLogo} alt="Government Emblem" className="h-10 sm:h-12 w-auto object-contain mix-blend-multiply" />
+            <img src={IndianLogo} alt="Government Emblem" className="h-16 sm:h-20 w-16 sm:w-20 object-cover rounded-full shadow-md" />
             <div>
               <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight">
                 Government Grievance Redressal Portal

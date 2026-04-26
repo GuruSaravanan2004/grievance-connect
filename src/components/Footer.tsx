@@ -1,4 +1,4 @@
-import IndianLogo from "@/assets/Indian Logo.jpg";
+import IndianLogo from "@/assets/parl.jpg";
 
 export default function Footer() {
   return (
@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex items-start gap-3">
-            <img src={IndianLogo} alt="Government Emblem" className="h-8 w-auto object-contain mix-blend-multiply shrink-0 mt-0.5" />
+            <img src={IndianLogo} alt="Government Emblem" className="h-14 w-14 object-cover rounded-full shrink-0 mt-0.5 shadow-sm" />
             <div>
               <h3 className="font-semibold text-sm">Government Grievance Redressal Portal</h3>
               <p className="text-xs text-muted-foreground mt-1">அரசு குறை தீர்வு நுழைவாயில்</p>
@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
         <div className="border-t mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-muted-foreground">
-            Copyright © TVK Government Portal 2026. All rights reserved.
+            Copyright © Government Portal 2026. All rights reserved.
           </p>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span>English</span>
